@@ -5,7 +5,7 @@
       <input
         type="text"
         class="add-todo"
-        placeholder="What needs to be done ?"
+        placeholder="What needs to be done ? Enter"
         v-model="todoName"
         @keyup.enter="AddTodoEvent"
       />
@@ -25,10 +25,16 @@
       <div class="list-todo" v-if="activeTab === 'all'">
         <h5 class="title-todos">Name Todos</h5>
         <span class="checkall-todos">Check All</span>
-        <input type="checkbox" @click="CheckAll" v-model="isCheckAll" />
+        <input
+          class="checkboxFour"
+          type="checkbox"
+          @click="CheckAll"
+          v-model="isCheckAll"
+        />
         <b-list-group v-for="item in todos" :key="item.id">
           <b-list-group-item class="justify-content-between align-items-center">
             <input
+              class="checkboxFour"
               type="checkbox"
               v-bind:value="item"
               v-model="todoCheckAll"
@@ -78,7 +84,7 @@
             />
             <button
               v-bind:class="{
-                btnActive: 'active' !== item.active
+                btnActive: 'active' !== item.active,
               }"
               class="btn-save"
               @click="HandleUpdateActiveTodo(item)"
@@ -86,9 +92,7 @@
               <div class="btnCompleted" v-show="item.active === 'completed'">
                 Completed
               </div>
-              <div v-show="item.active !== 'completed'">
-                Actite
-              </div>
+              <div v-show="item.active !== 'completed'">Actite</div>
             </button>
             <input
               v-show="checkUpdate === false"
@@ -113,6 +117,7 @@
         <h5 class="title-todos">Name Todos</h5>
         <span class="checkall-todos">Check All</span>
         <input
+          class="checkboxFour"
           type="checkbox"
           @click="checkAllActive"
           v-model="isCheckAllActive"
@@ -122,6 +127,7 @@
           <b-list-group-item class="justify-content-between align-items-center">
             <input
               type="checkbox"
+              class="checkboxFour"
               v-bind:value="item"
               v-model="todoCheckActive"
               @change="updateCheckAllActive"
@@ -170,7 +176,7 @@
             />
             <button
               v-bind:class="{
-                btnActive: 'active' !== item.active
+                btnActive: 'active' !== item.active,
               }"
               class="btn-save"
               @click="HandleUpdateActiveTodo(item)"
@@ -178,9 +184,7 @@
               <div class="btnCompleted" v-show="item.active === 'completed'">
                 Completed
               </div>
-              <div v-show="item.active !== 'completed'">
-                Actite
-              </div>
+              <div v-show="item.active !== 'completed'">Actite</div>
             </button>
             <input
               v-show="checkUpdate === false"
@@ -204,6 +208,7 @@
         <span class="checkall-todos">Check All</span>
         <input
           type="checkbox"
+          class="checkboxFour"
           @click="checkAllCompleted"
           v-model="isCheckAllCompleted"
         />
@@ -212,6 +217,7 @@
           <b-list-group-item class="justify-content-between align-items-center">
             <input
               type="checkbox"
+              class="checkboxFour"
               v-bind:value="item"
               v-model="todoCheckCompleted"
               @change="updateCheckAllCompleted"
@@ -260,7 +266,7 @@
             />
             <button
               v-bind:class="{
-                btnActive: 'active' !== item.active
+                btnActive: 'active' !== item.active,
               }"
               class="btn-save"
               @click="HandleUpdateActiveTodo(item)"
@@ -268,9 +274,7 @@
               <div class="btnCompleted" v-show="item.active === 'completed'">
                 Completed
               </div>
-              <div v-show="item.active !== 'completed'">
-                Actite
-              </div>
+              <div v-show="item.active !== 'completed'">Actite</div>
             </button>
             <input
               v-show="checkUpdate === false"
@@ -303,7 +307,7 @@ import {
   BFormCheckbox,
   BFormCheckboxGroup,
   BIconPencil,
-  BIconCheck
+  BIconCheck,
 } from "bootstrap-vue";
 export default {
   components: {
@@ -315,18 +319,18 @@ export default {
     BFormCheckbox,
     BFormCheckboxGroup,
     BIconPencil,
-    BIconCheck
+    BIconCheck,
   },
   name: "comp-header",
   props: {
-    todos: Array
+    todos: Array,
   },
   data() {
     return {
       tabHeader: [
         { text: "All", active: "all" },
         { text: "Actite", active: "active" },
-        { text: "Completed", active: "completed" }
+        { text: "Completed", active: "completed" },
       ],
       activeTab: "all",
       todoName: "",
@@ -339,7 +343,7 @@ export default {
       todoCheckCompleted: [],
       selectedlang: "",
       checkUpdate: false,
-      idCheck: ""
+      idCheck: "",
     };
   },
   methods: {
@@ -411,14 +415,14 @@ export default {
       const dataList = this.todoCheckActive.map(({ id, name, active }) => ({
         id: id,
         name: name,
-        active: "completed"
+        active: "completed",
       }));
       if (dataList.length > 0) this.$emit("updateTodo", dataList);
       this.isCheckAllActive = false;
     },
     ClearCompleted() {
       const dataList = this.todoCheckCompleted.map(({ id, name, active }) => ({
-        id: id
+        id: id,
       }));
       if (dataList.length > 0) this.$emit("deleteTodoEvent", dataList);
       this.isCheckAllCompleted = false;
@@ -426,13 +430,13 @@ export default {
     },
     HandleDeleteTodo(id) {
       const dataList = {
-        id: id
+        id: id,
       };
       this.$emit("deleteTodoEvent", dataList);
     },
     clearAll() {
       const dataList = this.todoCheckAll.map(({ id, name, active }) => ({
-        id: id
+        id: id,
       }));
       if (dataList.length > 0) this.$emit("deleteTodoEvent", dataList);
       this.isCheckAll = false;
@@ -451,7 +455,7 @@ export default {
       const data = {
         id: item.id,
         name: this.todoNameUpdate,
-        active: item.active
+        active: item.active,
       };
       if (this.todoNameUpdate !== "") this.$emit("updateTodo", data);
       if (!this.checkUpdate) {
@@ -469,35 +473,35 @@ export default {
         const data = {
           id: item.id,
           name: item.name,
-          active: "all"
+          active: "all",
         };
         this.$emit("updateTodo", data);
       } else if (item.active === "all") {
         const data = {
           id: item.id,
           name: item.name,
-          active: "active"
+          active: "active",
         };
         this.$emit("updateTodo", data);
       } else {
         const data = {
           id: item.id,
           name: item.name,
-          active: item.active
+          active: item.active,
         };
         this.$emit("updateTodo", data);
       }
       this.todoCheckAll = [];
-      this.isCheckAll = false
-    }
+      this.isCheckAll = false;
+    },
   },
   computed: {
     filterTodoActive() {
-      return this.todos.filter(t => t.active === "active");
+      return this.todos.filter((t) => t.active === "active");
     },
     filterTodocompleted() {
-      return this.todos.filter(t => t.active === "completed");
-    }
-  }
+      return this.todos.filter((t) => t.active === "completed");
+    },
+  },
 };
 </script>
