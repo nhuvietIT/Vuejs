@@ -1,4 +1,8 @@
-
+# APP TODOS
 # run Demo ToDos
-- 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+- cd ...\Vuejs
+- npm i
+- Run server : json-server db.json
+- Run vev : npm run dev
+
+ 
