@@ -1,5 +1,5 @@
 # APP TODOS
-# run Demo ToDos
+# run demo ToDos
 - cd ...\Vuejs
 - npm i
 - Run server : json-server db.json
